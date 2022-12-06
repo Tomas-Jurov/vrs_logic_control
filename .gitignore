@@ -1,0 +1,10 @@
+Debug/
+**/Src/*.o
+**/Src/*.su
+**/Src/*.d
+**/Startup/*.o
+**/Startup/*.su
+**/Startup/*.d
+**/Drivers/STM32F3xx_HAL_Driver/Src/*.o
+**/Drivers/STM32F3xx_HAL_Driver/Src/*.su
+**/Drivers/STM32F3xx_HAL_Driver/Src/*.d
