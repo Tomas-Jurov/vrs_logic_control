@@ -215,4 +215,8 @@ float ADC2_convertedValue2float(void)
 	return (ADC2->DR/4097.0f)*3.3f;
 }
 
+int map(float x, float in_min, float in_max, float out_min, float out_max){
+	return ((int)x - (int)in_min) * ((int)out_max - (int)out_min) / ((int)in_max - (int)in_min) + (int)out_min;
+}
+
 /* USER CODE END 1 */

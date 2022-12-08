@@ -44,6 +44,7 @@ float ADC1_convertedValue2float(void);
 float ADC2_convertedValue2float(void);
 void ADC1_start_conversion(void);
 void ADC2_start_conversion(void);
+int map(float x, float in_min, float in_max, float out_min, float out_max);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

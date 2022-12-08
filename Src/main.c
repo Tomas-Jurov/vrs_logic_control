@@ -71,6 +71,7 @@ uint8_t counter = 0;
 float voltage1 = 0;
 float voltage2 = 0;
 int fb = 0;
+int fb_scaled = 0;
 /* USER CODE END 0 */
 
 /**
@@ -136,13 +137,10 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  USART2_PutBuffer(4,1);
-	  USART2_PutBuffer(fb,1);
-	  USART2_PutBuffer(0,1);
-	  USART2_PutBuffer(0,1);
-	  USART2_PutBuffer(0,1);
+	  fb_scaled = map(fb,90,330,-100,100);
+	  USART2_PutBuffer((uint32_t)&fb_scaled, sizeof(fb));
 
-	 	  LL_mDelay(10);
+	 	  LL_mDelay(1000);
   }
   /* USER CODE END 3 */
 }
