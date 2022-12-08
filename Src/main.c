@@ -59,15 +59,8 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void proccesDmaData(const uint8_t* data, uint16_t len);
-void searchForCommand(const uint8_t* data,uint16_t len);
-
 
 /* Space for your global variables. */
-uint8_t tx_data[256];
-uint8_t tx_string[256] = "";
-uint8_t led_state=0;
-uint8_t counter = 0;
 float voltage1 = 0;
 float voltage2 = 0;
 int fb = 0;
@@ -112,16 +105,6 @@ int main(void)
   MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
   USART2_RegisterCallback(proccesDmaData);
-   *((volatile uint32_t *) (uint32_t)(0x40021000 + 0x00000014U)) |= (uint32_t)(1 << 18);
-
-     *((volatile uint32_t *)((uint32_t)0x48000400)) &= ~(uint32_t)(0x3 << 6);
-     *((volatile uint32_t *)((uint32_t)0x48000400)) |= (uint32_t)(1 << 6);
-
-     *((volatile uint32_t *)((uint32_t)(0x48000400 + 0x04U))) &= ~(1 << 3);
-
-     *((volatile uint32_t *)((uint32_t)(0x48000400 + 0x08U))) &= ~(0x3 << 6);
-
-     *((volatile uint32_t *)((uint32_t)(0x48000400 + 0x0CU))) &= ~(0x3 << 6);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -180,51 +163,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void proccesDmaData(const uint8_t* data,uint16_t len)
-{
-	/* Process received data */
-
-		// type your algorithm here:
-		if(!led_state){
-			searchForCommand(data,len);
-			if(strstr(tx_string, "ledON")){
-				LED_ON;
-				led_state=1;
-				strcpy(tx_string,"");
-			}
-		}
-		else{
-			searchForCommand(data,len);
-			if(strstr(tx_string, "ledOFF")){
-				LED_OFF;
-				led_state=0;
-				strcpy(tx_string,"");
-			}
-		}
-
-
-
-		}
-void searchForCommand(const uint8_t* data,uint16_t len){
-	if(counter>=250){
-		strcpy(tx_string,"");
-		counter=0;
-	}
-	for(int i = 0; i< len; i++){
-
-
-				if(*(data+i) >= 'a' && *(data+i) <= 'z'){
-						strncat(tx_string, &(*(data+i)), 1);
-						counter++;
-					}
-
-				if(*(data+i) >= 'A' && *(data+i) <= 'Z'){
-						strncat(tx_string, &(*(data+i)), 1);
-						counter++;
-					}
-
-				}
-}
 
 /* USER CODE END 4 */
 
