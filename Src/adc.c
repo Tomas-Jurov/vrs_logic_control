@@ -210,6 +210,7 @@ float ADC1_convertedValue2float(void)
 {
 	return (ADC1->DR/4097.0f)*3.3f;
 }
+
 float ADC2_convertedValue2float(void)
 {
 	return (ADC2->DR/4097.0f)*3.3f;

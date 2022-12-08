@@ -64,7 +64,7 @@ void MX_TIM3_Init(void)
   LL_TIM_DisableMasterSlaveMode(TIM3);
   /* USER CODE BEGIN TIM3_Init 2 */
   LL_TIM_EnableIT_UPDATE(TIM3);
-    LL_TIM_EnableCounter(TIM3);
+  LL_TIM_EnableCounter(TIM3);
   /* USER CODE END TIM3_Init 2 */
 
 }
