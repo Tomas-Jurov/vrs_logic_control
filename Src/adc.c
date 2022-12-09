@@ -215,8 +215,27 @@ float ADC2_convertedValue2float(void)
 	return (ADC2->DR/4097.0f)*3.3f;
 }
 
+
+
+int max(int num1, int num2)
+{
+    return (num1 > num2 ) ? num1 : num2;
+}
+
+
+int min(int num1, int num2)
+{
+    return (num1 > num2 ) ? num2 : num1;
+}
+
+
+int clamp100(int x){
+	return max(-100, min(100, x));
+}
+
+
 int map(float x, float in_min, float in_max, float out_min, float out_max){
-	return ((int)x - (int)in_min) * ((int)out_max - (int)out_min) / ((int)in_max - (int)in_min) + (int)out_min;
+	return clamp100(((int)x - (int)in_min) * ((int)out_max - (int)out_min) / ((int)in_max - (int)in_min) + (int)out_min);
 }
 
 /* USER CODE END 1 */
