@@ -133,14 +133,18 @@ int main(void)
 	  ADC2_start_conversion();
 	  voltage1 = ADC1_convertedValue2float()*100;
 	  voltage2 = ADC2_convertedValue2float()*100;
-	  fb=voltage1*0.885-187;
+	  fb=voltage1;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  fb_scaled = map(fb,90,330,-100,100);
-	  USART2_PutBuffer((uint32_t)&fb_scaled, sizeof(fb));
+	  fb_scaled = map(fb,74,324,-100,100);
+	  USART2_PutBuffer(4, 1);
+	  USART2_PutBuffer(fb_scaled,1);
+	  USART2_PutBuffer(0, 1);
+	  USART2_PutBuffer(0, 1);
+	  USART2_PutBuffer(0, 1);
 
-	 	  LL_mDelay(1000);
+	  LL_mDelay(10);
   }
   /* USER CODE END 3 */
 }

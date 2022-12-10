@@ -141,9 +141,9 @@ void MX_USART2_UART_Init(void)
 }
 
 /* USER CODE BEGIN 1 */
-void USART2_PutBuffer(uint32_t buffer, uint8_t length)
+void USART2_PutBuffer(uint8_t buffer, uint8_t length)
 {
-	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_7, buffer);
+	LL_DMA_SetMemoryAddress(DMA1, LL_DMA_CHANNEL_7, (uint32_t)&buffer);
 
 	LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_7, length);
 
