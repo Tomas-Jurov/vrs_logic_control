@@ -41,7 +41,10 @@ extern ADC_HandleTypeDef hadc1;
 void MX_ADC1_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+int8_t max(int8_t num1, int8_t num2);
+int8_t min(int8_t num1, int8_t num2);
+int8_t clamp100(int8_t x);
+int8_t map(uint16_t x, uint16_t in_min, uint16_t in_max, int8_t out_min, int8_t out_max);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

@@ -57,6 +57,10 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 uint32_t VR[2];
+int8_t lr = 0;
+int8_t fb = 0;
+int8_t v = 4;
+int8_t v0 = 0;
 /* USER CODE END 0 */
 
 /**
@@ -99,14 +103,17 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  HAL_UART_Transmit_IT(&huart2, 4, 1);
-	  HAL_UART_Transmit_IT(&huart2, VR, 1);
-	  HAL_UART_Transmit_IT(&huart2, VR+1, 1);
-	  HAL_UART_Transmit_IT(&huart2, 0, 1);
-	  HAL_UART_Transmit_IT(&huart2, 0, 1);
+
+    /* USER CODE BEGIN 3 */
+	  lr = map(*VR,875,4036,-100,100);
+	  fb = map(*(VR+1),240,3425,-100,100);
+	  HAL_UART_Transmit_IT(&huart2, (uint8_t *)&v, 1);
+	  HAL_UART_Transmit_IT(&huart2, (uint8_t *)&lr, 1);
+	  HAL_UART_Transmit_IT(&huart2, (uint8_t *)&fb, 1);
+	  HAL_UART_Transmit_IT(&huart2, (uint8_t *)&v0, 1);
+	  HAL_UART_Transmit_IT(&huart2, (uint8_t *)&v0, 1);
 
 	  HAL_Delay(10);
-    /* USER CODE BEGIN 3 */
 
   }
   /* USER CODE END 3 */
