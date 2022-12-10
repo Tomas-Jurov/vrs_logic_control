@@ -20,6 +20,7 @@
 #include "main.h"
 #include "adc.h"
 #include "dma.h"
+#include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -88,6 +89,7 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_ADC1_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_ADC_Start_DMA(&hadc1, VR, 2); //start adc in dma mode for multichannel
   /* USER CODE END 2 */
@@ -97,7 +99,13 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  int x = 5;
+	  HAL_UART_Transmit_IT(&huart2, 4, 1);
+	  HAL_UART_Transmit_IT(&huart2, VR, 1);
+	  HAL_UART_Transmit_IT(&huart2, VR+1, 1);
+	  HAL_UART_Transmit_IT(&huart2, 0, 1);
+	  HAL_UART_Transmit_IT(&huart2, 0, 1);
+
+	  HAL_Delay(10);
     /* USER CODE BEGIN 3 */
 
   }
