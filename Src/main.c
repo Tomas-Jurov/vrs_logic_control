@@ -104,7 +104,6 @@ int main(void)
   MX_TIM3_Init();
   MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
-  USART2_RegisterCallback(proccesDmaData);
   /* USER CODE END 2 */
 
   /* Infinite loop */
