@@ -64,6 +64,7 @@ void SystemClock_Config(void);
 float voltage1 = 0;
 float voltage2 = 0;
 int fb = 0;
+int fb_scaled = 0;
 /* USER CODE END 0 */
 
 /**
@@ -114,17 +115,18 @@ int main(void)
 	  ADC2_start_conversion();
 	  voltage1 = ADC1_convertedValue2float()*100;
 	  voltage2 = ADC2_convertedValue2float()*100;
-	  fb=voltage1*0.885-187;
+	  fb=voltage1;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  USART2_PutBuffer(4,1);
-	  USART2_PutBuffer(fb,1);
-	  USART2_PutBuffer(0,1);
-	  USART2_PutBuffer(0,1);
-	  USART2_PutBuffer(0,1);
+	  fb_scaled = map(fb,74,324,-100,100);
+	  USART2_PutBuffer(4, 1);
+	  USART2_PutBuffer(fb_scaled,1);
+	  USART2_PutBuffer(0, 1);
+	  USART2_PutBuffer(0, 1);
+	  USART2_PutBuffer(0, 1);
 
-	 	  LL_mDelay(10);
+	  LL_mDelay(10);
   }
   /* USER CODE END 3 */
 }
