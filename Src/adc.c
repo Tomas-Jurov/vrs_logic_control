@@ -206,14 +206,14 @@ void ADC2_start_conversion(void)
 }
 
 
-float ADC1_convertedValue2float(void)
+uint32_t get_ADC1Value(void)
 {
-	return (ADC1->DR/4097.0f)*3.3f;
+	return (ADC1->DR);
 }
 
-float ADC2_convertedValue2float(void)
+uint32_t get_ADC2Value(void)
 {
-	return (ADC2->DR/4097.0f)*3.3f;
+	return (ADC2->DR);
 }
 
 
@@ -235,8 +235,8 @@ int clamp100(int x){
 }
 
 
-int map(float x, float in_min, float in_max, float out_min, float out_max){
-	return clamp100(((int)x - (int)in_min) * ((int)out_max - (int)out_min) / ((int)in_max - (int)in_min) + (int)out_min);
+int8_t map(uint32_t x, uint32_t in_min, uint32_t in_max, int8_t out_min, int8_t out_max){
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
 /* USER CODE END 1 */

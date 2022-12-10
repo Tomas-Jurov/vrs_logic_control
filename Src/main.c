@@ -61,10 +61,10 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 
 /* Space for your global variables. */
-float voltage1 = 0;
-float voltage2 = 0;
-int fb = 0;
-int fb_scaled = 0;
+uint32_t voltage1 = 0;
+uint32_t voltage2 = 0;
+uint32_t fb = 0;
+int8_t fb_scaled = 0;
 /* USER CODE END 0 */
 
 /**
@@ -113,13 +113,13 @@ int main(void)
   {
 	  ADC1_start_conversion();
 	  ADC2_start_conversion();
-	  voltage1 = ADC1_convertedValue2float()*100;
-	  voltage2 = ADC2_convertedValue2float()*100;
-	  fb=voltage1;
+	  voltage1 = get_ADC1Value();
+	  voltage2 = get_ADC2Value();
+	  fb=voltage2;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  fb_scaled = map(fb,74,324,-100,100);
+	  fb_scaled = map(fb,1054,4035,-100,100);
 	  USART2_PutBuffer(4, 1);
 	  USART2_PutBuffer(fb_scaled,1);
 	  USART2_PutBuffer(0, 1);

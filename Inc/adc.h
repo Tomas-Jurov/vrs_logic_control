@@ -40,14 +40,14 @@ void MX_ADC1_Init(void);
 void MX_ADC2_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-float ADC1_convertedValue2float(void);
-float ADC2_convertedValue2float(void);
+uint32_t get_ADC1Value(void);
+uint32_t get_ADC2Value(void);
 void ADC1_start_conversion(void);
 void ADC2_start_conversion(void);
 int max(int num1, int num2);
 int min(int num1, int num2);
 int clamp100(int x);
-int map(float x, float in_min, float in_max, float out_min, float out_max);
+int8_t map(uint32_t x, uint32_t in_min, uint32_t in_max, int8_t out_min, int8_t out_max);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
