@@ -169,5 +169,24 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 }
 
 /* USER CODE BEGIN 1 */
+int8_t max(int8_t num1, int8_t num2)
+{
+    return (num1 > num2 ) ? num1 : num2;
+}
 
+
+int8_t min(int8_t num1, int8_t num2)
+{
+    return (num1 > num2 ) ? num2 : num1;
+}
+
+
+int8_t clamp100(int8_t x){
+	return max(-100, min(100, x));
+}
+
+
+int8_t map(uint16_t x, uint16_t in_min, uint16_t in_max, int8_t out_min, int8_t out_max){
+	return clamp100((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
+}
 /* USER CODE END 1 */
