@@ -56,11 +56,12 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint32_t VR[2];
+uint32_t RC_Commands[4];
 int8_t lr = 0;
 int8_t fb = 0;
+int8_t ud = 0;
+int8_t yv = 0;
 int8_t v = 4;
-int8_t v0 = 0;
 /* USER CODE END 0 */
 
 /**
@@ -95,7 +96,7 @@ int main(void)
   MX_ADC1_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  HAL_ADC_Start_DMA(&hadc1, VR, 2); //start adc in dma mode for multichannel
+  HAL_ADC_Start_DMA(&hadc1, RC_Commands, 4); //start adc in dma mode for multichannel
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -105,13 +106,15 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  lr = map(*VR,875,4036,-100,100);
-	  fb = map(*(VR+1),240,3425,-100,100);
+	  lr = map(*RC_Commands,806,4032,-100,100);
+	  fb = map(*(RC_Commands+1),347,3400,-100,100);
+	  ud = map(*(RC_Commands+2),3117,467,-100,100);
+	  yv = map(*(RC_Commands+3),3155,840,-100,100);
 	  HAL_UART_Transmit_IT(&huart2, (uint8_t *)&v, 1);
 	  HAL_UART_Transmit_IT(&huart2, (uint8_t *)&lr, 1);
 	  HAL_UART_Transmit_IT(&huart2, (uint8_t *)&fb, 1);
-	  HAL_UART_Transmit_IT(&huart2, (uint8_t *)&v0, 1);
-	  HAL_UART_Transmit_IT(&huart2, (uint8_t *)&v0, 1);
+	  HAL_UART_Transmit_IT(&huart2, (uint8_t *)&ud, 1);
+	  HAL_UART_Transmit_IT(&huart2, (uint8_t *)&yv, 1);
 
 	  HAL_Delay(10);
 
