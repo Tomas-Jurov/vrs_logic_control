@@ -6,165 +6,163 @@
  */
 
 #include "logic_control.h"
+#include <stdio.h>
 
 
 
 //***************calibration variables************************************************//
-uint16_t lr;
-uint16_t fb;
-uint16_t ud;
-uint16_t yv;
 
-uint16_t lr_center, lr_min, lr_max;
-uint16_t fb_center, fb_min, fb_max;
-uint16_t ud_center, ud_min, ud_max;
-uint16_t yv_center, yv_min, yv_max;
+uint8_t lr1=0;
+uint8_t fb1=0;
+uint8_t ud1=0;
+uint8_t yv1=0;
 
-uint16_t cal_lr;
-uint16_t cal_fb;
-uint16_t cal_ud;
-uint16_t cal_yv;
+uint16_t lr1_center, lr1_min, lr1_max;
+uint16_t fb1_center, fb1_min, fb1_max;
+uint16_t ud1_center, ud1_min, ud1_max;
+uint16_t yv1_center, yv1_min, yv1_max;
+
+uint16_t cal_lr1;
+uint16_t cal_fb1;
+uint16_t cal_ud1;
+uint16_t cal_yv1;
 
 //************setup******************************************************************//
 
-void setup() {
+/*void setup() {
   calibrate();
 }
-
+*/
 void loop() {
-  lr = *RC_Commands;
-  fb = *(RC_Commands+1);
-  ud = *(RC_Commands+2);
-  yv = *(RC_Commands+3);
+  lr1 = *RC_Commands;
+  fb1 = *(RC_Commands+1);
+  ud1 = *(RC_Commands+2);
+  yv1 = *(RC_Commands+3);
 }
 
-void calibrate() {
-  Serial.println("\n---calibrating joystick---\n");
-  Serial.println("place the joystick in the center position");
-  cal_lr = 0;
-  cal_fb = 0;
-  cal_ud = 0;
-  cal_yv = 0;
-  delay(2500);
-  Serial.print("calibrating center");
+void calibrate(void) {
+  printf("\n---calibrating joystick---\n");
+  printf("place the joystick in the center position");
+  cal_lr1 = 0;
+  cal_fb1 = 0;
+  cal_ud1 = 0;
+  cal_yv1 = 0;
+  HAL_Delay(2500);
+  printf("calibrating center");
   for (int16_t i = 0; i < 100; i++) {
-    Serial.print(".");
-    cal_lr += *RC_Commands;
-    delay(5);
-    cal_fb += *(RC_Commands+1);
-    delay(5);
-    cal_ud += *(RC_Commands+2);
-    delay(5);
-    cal_yv += *(RC_Commands+3);
-    delay(5);
+    printf(".");
+    cal_lr1 += *RC_Commands;
+    HAL_Delay(5);
+    cal_fb1 += *(RC_Commands+1);
+    HAL_Delay(5);
+    cal_ud1 += *(RC_Commands+2);
+    HAL_Delay(5);
+    cal_yv1 += *(RC_Commands+3);
+    HAL_Delay(5);
   }
-  lr_center = (cal_lr/100);
-  fb_center = (cal_fb/100);
-  ud_center = (cal_ud/100);
-  yv_center = (cal_yv/100);
-  Serial.print("\nCorrection X: ");Serial.print(lr_center);
-  Serial.print("\nCorrection Y: ");Serial.println(fb_center);
-  Serial.print("\nCorrection Y: ");Serial.println(ud_center);
-  Serial.print("\nCorrection Y: ");Serial.println(yv_center);
+  lr1_center = (cal_lr1/100);
+  fb1_center = (cal_fb1/100);
+  ud1_center = (cal_ud1/100);
+  yv1_center = (cal_yv1/100);
+  printf("\nCorrection X: ");printf("%d",lr1_center);
+  printf("\nCorrection Y: ");printf("%d",fb1_center);
+  printf("\nCorrection Y: ");printf("%d",ud1_center);
+  printf("\nCorrection Y: ");printf("%d",yv1_center);
 
-  Serial.println("\nplace the joystick 1 in the bottom-left corner");
-  lr_min = 0;    //reset the values
-  fb_min = 0;
-  delay(2500);
-  Serial.print("calibrating position");
+  printf("\nplace the joystick 1 in the bottom-left corner");
+  lr1_min = 0;    //reset the values
+  fb1_min = 0;
+  HAL_Delay(2500);
+  printf("calibrating position");
   for (int16_t i = 0; i < 100; i++) {    //take 100 readings
-	  Serial.print(".");
-	  lr_min += *RC_Commands;
-	  delay(5);
-	  fb_min += *(RC_Commands+1);
-	  delay(5);
+	  printf(".");
+	  lr1_min += *RC_Commands;
+	  HAL_Delay(5);
+	  fb1_min += *(RC_Commands+1);
+	  HAL_Delay(5);
   }
-  lr_min /= 100;
-  fb_min /= 100;
-  Serial.println();
-  Serial.print("X: "); Serial.println(lr_min);
-  Serial.print("Y: "); Serial.println(fb_min);
+  lr1_min /= 100;
+  fb1_min /= 100;
+  printf("X: "); printf("%d",lr1_min);
+  printf("Y: "); printf("%d",fb1_min);
 
-  Serial.println("\nplace the joystick 1 in the top-right corner");
-  lr_max = 0;    //reset the values
-  fb_max = 0;
-  delay(2500);
-  Serial.print("calibrating position");
+  printf("\nplace the joystick 1 in the top-right corner");
+  lr1_max = 0;    //reset the values
+  fb1_max = 0;
+  HAL_Delay(2500);
+  printf("calibrating position");
   for (int16_t i = 0; i < 100; i++) {    //take 100 readings
-	 Serial.print(".");
-	 lr_max += *RC_Commands;
-	 delay(5);
-	 fb_max += *(RC_Commands+1);
-	 delay(5);
+	 printf(".");
+	 lr1_max += *RC_Commands;
+	 HAL_Delay(5);
+	 fb1_max += *(RC_Commands+1);
+	 HAL_Delay(5);
   }
-  lr_max /=  100;
-  fb_max /=  100;
-  Serial.println();
-  Serial.print("X: "); Serial.println(lr_max);
-  Serial.print("Y: "); Serial.println(fb_max);
+  lr1_max /=  100;
+  fb1_max /=  100;
+  printf("X: "); printf("%d",lr1_max);
+  printf("Y: "); printf("%d",fb1_max);
 
-  Serial.println("\nplace the joystick 2 in the bottom-left corner");
-  ud_min = 0;    //reset the values
-  yv_min = 0;
-  delay(2500);
-  Serial.print("calibrating position");
+  printf("\nplace the joystick 2 in the bottom-left corner");
+  ud1_min = 0;    //reset the values
+  yv1_min = 0;
+  HAL_Delay(2500);
+  printf("calibrating position");
   for (int16_t i = 0; i < 100; i++) {    //take 100 readings
-	  Serial.print(".");
-      ud_min += *(RC_Commands+2);
-      delay(5);
-      yv_min += *(RC_Commands+3);
-      delay(5);
+	  printf(".");
+      ud1_min += *(RC_Commands+2);
+      HAL_Delay(5);
+      yv1_min += *(RC_Commands+3);
+      HAL_Delay(5);
   }
-  ud_min /= 100;
-  yv_min /= 100;
-  Serial.println();
-  Serial.print("X: "); Serial.println(lr_min);
-  Serial.print("Y: "); Serial.println(fb_min);
+  ud1_min /= 100;
+  yv1_min /= 100;
+  printf("X: "); printf("%d",lr1_min);
+  printf("Y: "); printf("%d",fb1_min);
 
-  Serial.println("\nplace the joystick 2 in the top-right corner");
-  ud_max = 0;    //reset the values
-  yv_max = 0;
-  delay(2500);
-  Serial.print("calibrating position");
+  printf("\nplace the joystick 2 in the top-right corner");
+  ud1_max = 0;    //reset the values
+  yv1_max = 0;
+  HAL_Delay(2500);
+  printf("calibrating position");
   for (int16_t i = 0; i < 100; i++) {    //take 100 readings
-	  Serial.print(".");
-      ud_max += *(RC_Commands+2);
-      delay(5);
-      yv_max += *(RC_Commands+3);
-      delay(5);
+	  printf(".");
+      ud1_max += *(RC_Commands+2);
+      HAL_Delay(5);
+      yv1_max += *(RC_Commands+3);
+      HAL_Delay(5);
   }
-  ud_max /=  100;
-  yv_max /=  100;
-  Serial.println();
-  Serial.print("X: "); Serial.println(lr_max);
-  Serial.print("Y: "); Serial.println(fb_max);
+  ud1_max /=  100;
+  yv1_max /=  100;
+  printf("X: "); printf("%d",lr1_max);
+  printf("Y: "); printf("%d",fb1_max);
 
-  if(lr_max < lr_min){
-	  uint16_t val = lr_max;
-    lr_max = lr_min;
-    lr_min = val;
+  if(lr1_max < lr1_min){
+	  uint16_t val = lr1_max;
+    lr1_max = lr1_min;
+    lr1_min = val;
   }
-  if(fb_max < fb_min){
-	  uint16_t val = fb_max;
-    fb_max = fb_min;
-    fb_min = val;
+  if(fb1_max < fb1_min){
+	  uint16_t val = fb1_max;
+    fb1_max = fb1_min;
+    fb1_min = val;
   }
 
-  if(ud_max < ud_min){
-  	  uint16_t val = ud_max;
-      ud_max = ud_min;
-      ud_min = val;
+  if(ud1_max < ud1_min){
+  	  uint16_t val = ud1_max;
+      ud1_max = ud1_min;
+      ud1_min = val;
     }
-    if(yv_max < yv_min){
-  	  uint16_t val = yv_max;
-      yv_max = yv_min;
-      yv_min = val;
+    if(yv1_max < yv1_min){
+  	  uint16_t val = yv1_max;
+      yv1_max = yv1_min;
+      yv1_min = val;
     }
 
-  Serial.print("\nrange lr: ");Serial.print(lr_min);Serial.print(" - ");Serial.println(lr_max);
-  Serial.print("range fb: ");Serial.print(fb_min);Serial.print(" - ");Serial.println(fb_max);
-  Serial.print("\nrange ud: ");Serial.print(ud_min);Serial.print(" - ");Serial.println(ud_max);
-    Serial.print("range yv: ");Serial.print(yv_min);Serial.print(" - ");Serial.println(yv_max);
+  printf("\nrange lr1: ");printf("%d",lr1_min);printf(" - ");printf("%d",lr1_max);
+  printf("range fb1: ");printf("%d",fb1_min);printf(" - ");printf("%d",fb1_max);
+  printf("\nrange ud1: ");printf("%d",ud1_min);printf(" - ");printf("%d",ud1_max);
+  printf("range yv1: ");printf("%d",yv1_min);printf(" - ");printf("%d",yv1_max);
 
-  Serial.println("\n---calibration done---\n");
+  printf("\n---calibration done---\n");
 }
