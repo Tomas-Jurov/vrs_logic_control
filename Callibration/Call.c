@@ -48,7 +48,7 @@ void calibrate(void) {
   cal_ud1 = 0;
   cal_yv1 = 0;
   HAL_Delay(2500);
-  printf("calibrating center");
+  printf("\nCalibrating center");
   for (int16_t i = 0; i < 100; i++) {
     printf(".");
     cal_lr1 += *RC_Commands;
@@ -66,14 +66,14 @@ void calibrate(void) {
   yv1_center = (cal_yv1/100);
   printf("\nCorrection X: ");printf("%d",lr1_center);
   printf("\nCorrection Y: ");printf("%d",fb1_center);
-  printf("\nCorrection Y: ");printf("%d",ud1_center);
+  printf("\nCorrection X: ");printf("%d",ud1_center);
   printf("\nCorrection Y: ");printf("%d",yv1_center);
 
-  printf("\nplace the joystick 1 in the bottom-left corner");
+  printf("\nPlace the joystick 1 in the bottom-left corner");
   lr1_min = 0;    //reset the values
   fb1_min = 0;
   HAL_Delay(2500);
-  printf("calibrating position");
+  printf("\nCalibrating position");
   for (int16_t i = 0; i < 100; i++) {    //take 100 readings
 	  printf(".");
 	  lr1_min += *RC_Commands;
@@ -83,14 +83,14 @@ void calibrate(void) {
   }
   lr1_min /= 100;
   fb1_min /= 100;
-  printf("X: "); printf("%d",lr1_min);
-  printf("Y: "); printf("%d",fb1_min);
+  printf("\nX: %d%",lr1_min); /*printf("%d",lr1_min);*/
+  printf("\nY: %d%",fb1_min); /*printf("%d",fb1_min);*/
 
-  printf("\nplace the joystick 1 in the top-right corner");
+  printf("\nPlace the joystick 1 in the top-right corner");
   lr1_max = 0;    //reset the values
   fb1_max = 0;
   HAL_Delay(2500);
-  printf("calibrating position");
+  printf("\nCalibrating position");
   for (int16_t i = 0; i < 100; i++) {    //take 100 readings
 	 printf(".");
 	 lr1_max += *RC_Commands;
@@ -100,14 +100,14 @@ void calibrate(void) {
   }
   lr1_max /=  100;
   fb1_max /=  100;
-  printf("X: "); printf("%d",lr1_max);
-  printf("Y: "); printf("%d",fb1_max);
+  printf("X: %d%",lr1_max); /*printf("%d",lr1_max);*/
+  printf("Y: %d%",fb1_max);/* printf("%d",fb1_max);*/
 
-  printf("\nplace the joystick 2 in the bottom-left corner");
+  printf("\nPlace the joystick 2 in the bottom-left corner");
   ud1_min = 0;    //reset the values
   yv1_min = 0;
   HAL_Delay(2500);
-  printf("calibrating position");
+  printf("\nCalibrating position");
   for (int16_t i = 0; i < 100; i++) {    //take 100 readings
 	  printf(".");
       ud1_min += *(RC_Commands+2);
@@ -117,14 +117,14 @@ void calibrate(void) {
   }
   ud1_min /= 100;
   yv1_min /= 100;
-  printf("X: "); printf("%d",lr1_min);
-  printf("Y: "); printf("%d",fb1_min);
+  printf("\nX: %d%",ud1_min); /*printf("%d",ud1_min);*/
+  printf("\nY: %d%",yv1_min); /*printf("%d",yv1_min);*/
 
-  printf("\nplace the joystick 2 in the top-right corner");
+  printf("\nPlace the joystick 2 in the top-right corner");
   ud1_max = 0;    //reset the values
   yv1_max = 0;
   HAL_Delay(2500);
-  printf("calibrating position");
+  printf("\nCalibrating position");
   for (int16_t i = 0; i < 100; i++) {    //take 100 readings
 	  printf(".");
       ud1_max += *(RC_Commands+2);
@@ -134,11 +134,11 @@ void calibrate(void) {
   }
   ud1_max /=  100;
   yv1_max /=  100;
-  printf("X: "); printf("%d",lr1_max);
-  printf("Y: "); printf("%d",fb1_max);
+  printf("\nX: %d",ud1_max); /*printf("%d",ud1_max);*/
+  printf("\nY: %d",yv1_max); /*printf("%d",yv1_max);*/
 
   if(lr1_max < lr1_min){
-	  uint16_t val = lr1_max;
+	uint16_t val = lr1_max;
     lr1_max = lr1_min;
     lr1_min = val;
   }
@@ -159,10 +159,10 @@ void calibrate(void) {
       yv1_min = val;
     }
 
-  printf("\nrange lr1: ");printf("%d",lr1_min);printf(" - ");printf("%d",lr1_max);
-  printf("range fb1: ");printf("%d",fb1_min);printf(" - ");printf("%d",fb1_max);
-  printf("\nrange ud1: ");printf("%d",ud1_min);printf(" - ");printf("%d",ud1_max);
-  printf("range yv1: ");printf("%d",yv1_min);printf(" - ");printf("%d",yv1_max);
+  printf("\nRange lr1: %d - %d",lr1_min,lr1_max);/*;printf("%d",lr1_min);printf(" - ");printf("%d",lr1_max);*/
+  printf("\nRange fb1: %d - %d",fb1_min,fb1_max);/*printf("%d",fb1_min);printf(" - ");printf("%d",fb1_max);*/
+  printf("\nRange ud1: %d - %d",ud1_min,ud1_max);/*printf("%d",ud1_min);printf(" - ");printf("%d",ud1_max);*/
+  printf("\nRange yv1: %d - %d",yv1_min,yv1_max);/*printf("%d",yv1_min);printf(" - ");printf("%d",yv1_max);*/
 
   printf("\n---calibration done---\n");
 }
