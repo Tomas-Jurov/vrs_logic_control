@@ -5,14 +5,6 @@
  *      Author: mario
  */
 
-
-/*
- * Call.c
- *
- *  Created on: 14. 12. 2022
- *      Author: mario
- */
-
 #include "logic_control.h"
 #include <stdio.h>
 
@@ -36,12 +28,6 @@ uint32_t cal_ud1;
 uint32_t cal_yv1;
 
 //************setup******************************************************************//
-
-/*void setup() {
-  calibrate();
-}
-*/
-
 void calibrate(void) {
   printf("\n---calibrating joystick---\n");
   printf("place the joystick in the center position");
@@ -86,8 +72,8 @@ void calibrate(void) {
   }
   lr1_min /= 100;
   fb1_min /= 100;
-  printf("\nX: %d",lr1_min); /*printf("%d",lr1_min);*/
-  printf("\nY: %d",fb1_min); /*printf("%d",fb1_min);*/
+  printf("\nX: %d",lr1_min);
+  printf("\nY: %d",fb1_min);
 
   printf("\nPlace the joystick 1 in the top-right corner");
   lr1_max = 0;    //reset the values
@@ -104,8 +90,8 @@ void calibrate(void) {
   }
   lr1_max /=  100;
   fb1_max /=  100;
-  printf("\nX: %d",lr1_max); /*printf("%d",lr1_max);*/
-  printf("\nY: %d",fb1_max);/* printf("%d",fb1_max);*/
+  printf("\nX: %d",lr1_max);
+  printf("\nY: %d",fb1_max);
 
   printf("\nPlace the joystick 2 in the bottom-left corner");
   ud1_min = 0;    //reset the values
@@ -122,8 +108,8 @@ void calibrate(void) {
   }
   ud1_min /= 100;
   yv1_min /= 100;
-  printf("\nX: %d",ud1_min); /*printf("%d",ud1_min);*/
-  printf("\nY: %d",yv1_min); /*printf("%d",yv1_min);*/
+  printf("\nX: %d",ud1_min);
+  printf("\nY: %d",yv1_min);
 
   printf("\nPlace the joystick 2 in the top-right corner");
   ud1_max = 0;    //reset the values
@@ -140,8 +126,8 @@ void calibrate(void) {
   }
   ud1_max /=  100;
   yv1_max /=  100;
-  printf("\nX: %d",ud1_max); /*printf("%d",ud1_max);*/
-  printf("\nY: %d",yv1_max); /*printf("%d",yv1_max);*/
+  printf("\nX: %d",ud1_max);
+  printf("\nY: %d",yv1_max);
 
   if(lr1_max < lr1_min){
 	uint16_t val = lr1_max;
@@ -165,10 +151,10 @@ void calibrate(void) {
       yv1_min = val;
     }
 
-  printf("\nRange lr1: %d - %d",lr1_min,lr1_max);/*;printf("%d",lr1_min);printf(" - ");printf("%d",lr1_max);*/
-  printf("\nRange fb1: %d - %d",fb1_min,fb1_max);/*printf("%d",fb1_min);printf(" - ");printf("%d",fb1_max);*/
-  printf("\nRange ud1: %d - %d",ud1_min,ud1_max);/*printf("%d",ud1_min);printf(" - ");printf("%d",ud1_max);*/
-  printf("\nRange yv1: %d - %d",yv1_min,yv1_max);/*printf("%d",yv1_min);printf(" - ");printf("%d",yv1_max);*/
+  printf("\nRange lr1: %d - %d",lr1_min,lr1_max);
+  printf("\nRange fb1: %d - %d",fb1_min,fb1_max);
+  printf("\nRange ud1: %d - %d",ud1_min,ud1_max);
+  printf("\nRange yv1: %d - %d",yv1_min,yv1_max);
 
   printf("\n---calibration done---\n");
 }
