@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "logic_control.h"
+#include "calibration.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -112,8 +113,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
 	  get_and_send_data();
-	  loop();
-	  calibrate();
+	  //calibrate();
 
   }
   /* USER CODE END 3 */

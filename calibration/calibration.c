@@ -1,4 +1,12 @@
 /*
+ * calibration.c
+ *
+ *  Created on: Dec 14, 2022
+ *      Author: mario
+ */
+
+
+/*
  * Call.c
  *
  *  Created on: 14. 12. 2022
@@ -12,20 +20,20 @@
 
 //***************calibration variables************************************************//
 
-uint8_t lr1=0;
-uint8_t fb1=0;
-uint8_t ud1=0;
-uint8_t yv1=0;
+uint32_t lr1=0;
+uint32_t fb1=0;
+uint32_t ud1=0;
+uint32_t yv1=0;
 
-uint16_t lr1_center, lr1_min, lr1_max;
-uint16_t fb1_center, fb1_min, fb1_max;
-uint16_t ud1_center, ud1_min, ud1_max;
-uint16_t yv1_center, yv1_min, yv1_max;
+uint32_t lr1_center, lr1_min, lr1_max;
+uint32_t fb1_center, fb1_min, fb1_max;
+uint32_t ud1_center, ud1_min, ud1_max;
+uint32_t yv1_center, yv1_min, yv1_max;
 
-uint16_t cal_lr1;
-uint16_t cal_fb1;
-uint16_t cal_ud1;
-uint16_t cal_yv1;
+uint32_t cal_lr1;
+uint32_t cal_fb1;
+uint32_t cal_ud1;
+uint32_t cal_yv1;
 
 //************setup******************************************************************//
 
@@ -33,12 +41,6 @@ uint16_t cal_yv1;
   calibrate();
 }
 */
-void loop() {
-  lr1 = *RC_Commands;
-  fb1 = *(RC_Commands+1);
-  ud1 = *(RC_Commands+2);
-  yv1 = *(RC_Commands+3);
-}
 
 void calibrate(void) {
   printf("\n---calibrating joystick---\n");
@@ -47,7 +49,7 @@ void calibrate(void) {
   cal_fb1 = 0;
   cal_ud1 = 0;
   cal_yv1 = 0;
-  HAL_Delay(2500);
+  HAL_Delay(5000);
   printf("\nCalibrating center");
   for (int16_t i = 0; i < 100; i++) {
     printf(".");
@@ -72,8 +74,9 @@ void calibrate(void) {
   printf("\nPlace the joystick 1 in the bottom-left corner");
   lr1_min = 0;    //reset the values
   fb1_min = 0;
-  HAL_Delay(2500);
+  HAL_Delay(5000);
   printf("\nCalibrating position");
+  HAL_Delay(5000);
   for (int16_t i = 0; i < 100; i++) {    //take 100 readings
 	  printf(".");
 	  lr1_min += *RC_Commands;
@@ -83,14 +86,15 @@ void calibrate(void) {
   }
   lr1_min /= 100;
   fb1_min /= 100;
-  printf("\nX: %d%",lr1_min); /*printf("%d",lr1_min);*/
-  printf("\nY: %d%",fb1_min); /*printf("%d",fb1_min);*/
+  printf("\nX: %d",lr1_min); /*printf("%d",lr1_min);*/
+  printf("\nY: %d",fb1_min); /*printf("%d",fb1_min);*/
 
   printf("\nPlace the joystick 1 in the top-right corner");
   lr1_max = 0;    //reset the values
   fb1_max = 0;
-  HAL_Delay(2500);
+  HAL_Delay(5000);
   printf("\nCalibrating position");
+  HAL_Delay(5000);
   for (int16_t i = 0; i < 100; i++) {    //take 100 readings
 	 printf(".");
 	 lr1_max += *RC_Commands;
@@ -100,14 +104,15 @@ void calibrate(void) {
   }
   lr1_max /=  100;
   fb1_max /=  100;
-  printf("X: %d%",lr1_max); /*printf("%d",lr1_max);*/
-  printf("Y: %d%",fb1_max);/* printf("%d",fb1_max);*/
+  printf("\nX: %d",lr1_max); /*printf("%d",lr1_max);*/
+  printf("\nY: %d",fb1_max);/* printf("%d",fb1_max);*/
 
   printf("\nPlace the joystick 2 in the bottom-left corner");
   ud1_min = 0;    //reset the values
   yv1_min = 0;
-  HAL_Delay(2500);
+  HAL_Delay(5000);
   printf("\nCalibrating position");
+  HAL_Delay(5000);
   for (int16_t i = 0; i < 100; i++) {    //take 100 readings
 	  printf(".");
       ud1_min += *(RC_Commands+2);
@@ -117,14 +122,15 @@ void calibrate(void) {
   }
   ud1_min /= 100;
   yv1_min /= 100;
-  printf("\nX: %d%",ud1_min); /*printf("%d",ud1_min);*/
-  printf("\nY: %d%",yv1_min); /*printf("%d",yv1_min);*/
+  printf("\nX: %d",ud1_min); /*printf("%d",ud1_min);*/
+  printf("\nY: %d",yv1_min); /*printf("%d",yv1_min);*/
 
   printf("\nPlace the joystick 2 in the top-right corner");
   ud1_max = 0;    //reset the values
   yv1_max = 0;
-  HAL_Delay(2500);
+  HAL_Delay(5000);
   printf("\nCalibrating position");
+  HAL_Delay(5000);
   for (int16_t i = 0; i < 100; i++) {    //take 100 readings
 	  printf(".");
       ud1_max += *(RC_Commands+2);

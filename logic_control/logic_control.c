@@ -28,10 +28,10 @@ bool funcb(){
 }
 
 void get_and_send_data(void){
-	lr = map(*RC_Commands,806,4032,-100,100);
-	fb = map(*(RC_Commands+1),347,3400,-100,100);
-	ud = map(*(RC_Commands+2),3155,840,-100,100);
-	yv = map(*(RC_Commands+3),3117,467,-100,100);
+	lr = map(*RC_Commands,862,4033,-100,100);
+	fb = map(*(RC_Commands+1),235,3381,-100,100);
+	ud = map(*(RC_Commands+2),3152,847,-100,100);
+	yv = map(*(RC_Commands+3),3108,438,-100,100);
 
     if(lr<-80 && fb<-90 && ud<-90 && yv>90 && (not_in_air==true)){
     	bool success = funcb();
