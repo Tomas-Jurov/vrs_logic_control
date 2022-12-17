@@ -22,11 +22,10 @@
 #include "dma.h"
 #include "usart.h"
 #include "gpio.h"
-#include "logic_control.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "logic_control.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,7 +56,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+uint8_t data[10];
 /* USER CODE END 0 */
 
 /**
