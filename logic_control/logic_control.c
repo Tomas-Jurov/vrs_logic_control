@@ -35,7 +35,7 @@ void get_and_send_data(void){
 		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&cm, 1);
 		HAL_Delay(1);
 		uint8_t success = 0;
-		HAL_UART_Receive(&huart2,(uint8_t *)&success,1,4500);
+		HAL_UART_Receive(&huart2,(uint8_t *)&success,1,20000);
 		if(success){
 			not_in_air=false;
 			rc_control_on = true;
@@ -55,19 +55,19 @@ void get_and_send_data(void){
 		start_time = HAL_GetTick();
 		watch_dog = false;
 	}
-	   if(ud < -90 && (not_down==true) && (watch_dog==true) && (HAL_GetTick()-start_time)>1500){
+	   if(ud < -90 && (not_in_air==false) && (not_down==true) && (watch_dog==true) && (HAL_GetTick()-start_time)>1000){
 	        rc_control_on=false;
 	        cm = 112;
 			HAL_UART_Transmit_IT(&huart2, (uint8_t *)&cm, 1);
 			HAL_Delay(1);
 	        //success = me.land();
 			uint8_t success = 0;
-			HAL_UART_Receive(&huart2,(uint8_t *)&success,1,4500);
+			HAL_UART_Receive(&huart2,(uint8_t *)&success,1,30000);
 	        //print('landed');
 	        if(success){
+	        	not_in_air=true;
 	            not_down=false;
 	            watch_dog=false;
-	            not_in_air=true;
 	        }
 	    }
 
