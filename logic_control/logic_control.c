@@ -9,10 +9,6 @@
 #include <string.h>
 #include <stdbool.h>
 
-int8_t lr = 0;
-int8_t fb = 0;
-int8_t ud = 0;
-int8_t yv = 0;
 int8_t cm = 4;
 
 uint8_t deadzone= 30;
@@ -59,11 +55,6 @@ void get_and_send_data(void){
 	yPosition = *(RC_Commands+1);
 	zPosition = *(RC_Commands+2);
 	yawPosition = *(RC_Commands+3);
-
-	lr = map(xPosition,xLow,xHigh,-100,100);
-	fb = map(yPosition,yLow,yHigh,-100,100);
-	ud = map(zPosition,zHigh,zLow,-100,100);
-	yv = map(yawPosition,yawHigh,yawLow,-100,100);
 
 	if((xPosition <= xRest+deadzone) && (xPosition >= xRest - deadzone)){
 			x_speed = 0;
@@ -113,7 +104,7 @@ void get_and_send_data(void){
 	}
 
 
-    if(lr<-80 && fb<-90 && ud<-90 && yv>90 && (not_in_air==true)){
+    if(x_speed<-80 && y_speed<-90 && z_speed<-90 && yaw_speed>90 && (not_in_air==true)){
 		cm = 110;
 		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&cm, 1);
 		HAL_Delay(1);
@@ -130,15 +121,15 @@ void get_and_send_data(void){
 
 
 
-	if((ud<-90) && (not_in_air==false) && watch_dog==false){
+	if((z_speed<-90) && (not_in_air==false) && watch_dog==false){
 	        start_time = HAL_GetTick();
 	        watch_dog=true;
 	}
-	else if(ud>-90){
+	else if(z_speed>-90){
 		start_time = HAL_GetTick();
 		watch_dog = false;
 	}
-	   if(ud < -90 && (not_in_air==false) && (not_down==true) && (watch_dog==true) && (HAL_GetTick()-start_time)>1000){
+	   if(z_speed < -90 && (not_in_air==false) && (not_down==true) && (watch_dog==true) && (HAL_GetTick()-start_time)>1000){
 	        rc_control_on=false;
 	        cm = 112;
 			HAL_UART_Transmit_IT(&huart2, (uint8_t *)&cm, 1);
@@ -159,13 +150,13 @@ void get_and_send_data(void){
 		cm = 111;
 		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&cm, 1);
 		HAL_Delay(1);
-		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&lr, 1);
+		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&x_speed, 1);
 		HAL_Delay(1);
-		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&fb, 1);
+		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&y_speed, 1);
 		HAL_Delay(1);
-		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&ud, 1);
+		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&z_speed, 1);
 		HAL_Delay(1);
-		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&yv, 1);
+		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&yaw_speed, 1);
 		HAL_Delay(1);
 	}
 
