@@ -9,32 +9,33 @@
 #include <string.h>
 #include <stdbool.h>
 
+//USER VARIABLES
 int8_t cm = 4;
 
-uint8_t deadzone= 30;
+uint8_t deadzone= 70;
 int8_t x_speed = 0;
 uint16_t xPosition = 0;
-uint16_t xLow = 806;
-uint16_t xHigh = 4032;
-uint16_t xRest =2788;
+uint16_t xLow = 963;
+uint16_t xHigh = 4034;
+uint16_t xRest =2905;
 
 int8_t y_speed = 0;
 uint16_t yPosition = 0;
-uint16_t yLow = 347;
-uint16_t yHigh = 3400;
-uint16_t yRest = 1873;
+uint16_t yLow = 229;
+uint16_t yHigh = 3358;
+uint16_t yRest = 1778;
 
 int8_t z_speed = 0;
 uint16_t zPosition = 0;
-uint16_t zLow = 840;
-uint16_t zHigh = 3155;
-uint16_t zRest = 1997;
+uint16_t zLow = 836;
+uint16_t zHigh = 3143;
+uint16_t zRest = 1930;
 
 int8_t yaw_speed = 0;
 uint16_t yawPosition = 0;
-uint16_t yawLow = 467;
-uint16_t yawHigh = 3117;
-uint16_t yawRest = 1792;
+uint16_t yawLow = 401;
+uint16_t yawHigh = 3046;
+uint16_t yawRest = 1746;
 
 
 uint32_t RC_Commands[4];
@@ -46,8 +47,6 @@ bool watch_dog = false;
 char takeoff[] = "takeoff\r\n";
 char here[] = "here\r\n";
 char buffer[500];
-
-
 
 void get_and_send_data(void){
 
