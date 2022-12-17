@@ -84,7 +84,7 @@ void get_and_send_data(void){
 		y_speed = map(yPosition,yRest + deadzone,yHigh,0,100);
 	}
 	if(yPosition < yRest - deadzone){
-		y_speed = (map(yPosition,zLow,yRest-deadzone,-100,0));
+		y_speed = map(yPosition,yLow,yRest-deadzone,-100,0);
 	}
 
 
@@ -93,10 +93,10 @@ void get_and_send_data(void){
 		z_speed = 0;
 	}
 	if(zPosition > zRest+deadzone){
-		z_speed = map(zPosition,zRest + deadzone,zHigh,0,100);
+		z_speed = map(zPosition,zRest + deadzone,zHigh,0,-100);
 	}
 	if(zPosition < zRest - deadzone){
-		z_speed = (map(zPosition,zLow,zRest - deadzone,-100,0));
+		z_speed = map(zPosition,zLow,zRest - deadzone,100,0);
 	}
 
 
@@ -105,11 +105,11 @@ void get_and_send_data(void){
 		yaw_speed = 0;
 	}
 	if(yawPosition > yawRest+deadzone){
-		yaw_speed = map(yawPosition,yawRest + deadzone,yawHigh,0,100);
+		yaw_speed = map(yawPosition,yawRest + deadzone,yawHigh,0,-100);
 	}
 	if(yawPosition < yawRest - deadzone){
 
-		yaw_speed = (map(yawPosition,yawLow,yawRest - deadzone,-100,0));
+		yaw_speed = map(yawPosition,yawLow,yawRest - deadzone,100,0);
 	}
 
 
