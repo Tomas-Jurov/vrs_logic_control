@@ -19,7 +19,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "adc.h"
-#include "usart.h"
 
 /* USER CODE BEGIN 0 */
 

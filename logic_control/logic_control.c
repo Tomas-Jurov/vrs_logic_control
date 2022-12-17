@@ -23,9 +23,6 @@ char here[] = "here\r\n";
 char buffer[500];
 
 
-bool funcb(){
-	return true;
-}
 
 void get_and_send_data(void){
 	lr = map(*RC_Commands,806,4032,-100,100);
@@ -34,10 +31,11 @@ void get_and_send_data(void){
 	yv = map(*(RC_Commands+3),3117,467,-100,100);
 
     if(lr<-80 && fb<-90 && ud<-90 && yv>90 && (not_in_air==true)){
-    	bool success = funcb();
 		cm = 110;
 		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&cm, 1);
 		HAL_Delay(1);
+		uint8_t success = 0;
+		HAL_UART_Receive(&huart2, (uint8_t *)&success, 1, 2500);
 		if(success){
 			HAL_Delay(2000);
 			not_in_air=false;
@@ -64,7 +62,8 @@ void get_and_send_data(void){
 			HAL_UART_Transmit_IT(&huart2, (uint8_t *)&cm, 1);
 			HAL_Delay(1);
 	        //success = me.land();
-	        bool success = funcb();
+			uint8_t success = 0;
+			HAL_UART_Receive(&huart2, (uint8_t *)&success, 1, 2500);
 	        //print('landed');
 	        if(success){
 	            not_down=false;

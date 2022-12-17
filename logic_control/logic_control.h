@@ -11,7 +11,6 @@
 extern uint32_t RC_Commands[4];
 
 void get_and_send_data(void);
-bool funcb(void);
 
 
 #endif /* LOGIC_CONTROL_H_ */
