@@ -5,22 +5,41 @@
  *      Author: Tomáš
  */
 #include "usart.h"
+#include "adc.h"
 #include <string.h>
 #include <stdbool.h>
+
 int8_t lr = 0;
 int8_t fb = 0;
 int8_t ud = 0;
 int8_t yv = 0;
 int8_t cm = 4;
 
-int8_t deadzone= 20;
+uint8_t deadzone= 30;
 int8_t x_speed = 0;
-int8_t y_speed = 0;
-int8_t z_speed = 0;
-int8_t yaw_speed = 0;
+uint16_t xPosition = 0;
+uint16_t xLow = 806;
+uint16_t xHigh = 4032;
+uint16_t xRest =2788;
 
-int8_t oneMin = 0;
-int8_t oneMax = 0;
+int8_t y_speed = 0;
+uint16_t yPosition = 0;
+uint16_t yLow = 347;
+uint16_t yHigh = 3400;
+uint16_t yRest = 1873;
+
+int8_t z_speed = 0;
+uint16_t zPosition = 0;
+uint16_t zLow = 840;
+uint16_t zHigh = 3155;
+uint16_t zRest = 1997;
+
+int8_t yaw_speed = 0;
+uint16_t yawPosition = 0;
+uint16_t yawLow = 467;
+uint16_t yawHigh = 3117;
+uint16_t yawRest = 1792;
+
 
 uint32_t RC_Commands[4];
 bool not_in_air = true;
@@ -38,54 +57,62 @@ bool funcb(){
 }
 
 void get_and_send_data(void){
-	//min max , data na mapovanie
 
-	//toto neviem co s tym chces robit
-	lr = map(*RC_Commands,806,4032,-100,100);
-	fb = map(*(RC_Commands+1),347,3400,-100,100);
-	ud = map(*(RC_Commands+2),3155,840,-100,100);
-	yv = map(*(RC_Commands+3),3117,467,-100,100);
+	xPosition =*RC_Commands;
+	yPosition = *(RC_Commands+1);
+	zPosition = *(RC_Commands+2);
+	yawPosition = *(RC_Commands+3);
+
+	lr = map(xPosition,xLow,xHigh,-100,100);
+	fb = map(yPosition,yLow,yHigh,-100,100);
+	ud = map(zPosition,zHigh,zLow,-100,100);
+	yv = map(yawPosition,yawHigh,yawLow,-100,100);
+
+	if((xPosition <= xRest+deadzone) && (xPosition >= xRest - deadzone)){
+			x_speed = 0;
+		}
+	if(xPosition > xRest+deadzone){
+		x_speed = map(xPosition,xRest+deadzone,xHigh,0,100);
+	}
+	if(xPosition < xRest - deadzone){
+		x_speed = map(xPosition,xLow,xRest - deadzone,-100,0);
+	}
 
 
-	if((map((*RC_Commands),(*RC_Commands),4032,0,100)<=(map((*RC_Commands),(*RC_Commands)+deadzone,4032,0,100)))&&(map((*RC_Commands),(*RC_Commands),829,0,-100)>=(map((*RC_Commands),(*RC_Commands)-deadzone,829,0,-100)))){
-		x_speed = 0;
-	}
-	if((map((*RC_Commands),(*RC_Commands),4032,0,100))>(map((*RC_Commands),(*RC_Commands)+deadzone,4032,0,100))){
-		x_speed = map((*RC_Commands),(*RC_Commands),4032,0,100);
-	}
-	if((map((*RC_Commands),(*RC_Commands),829,0,-100))<(map((*RC_Commands),(*RC_Commands)-deadzone,829,0,-100))){
-		x_speed = (map((*RC_Commands),(*RC_Commands),829,0,-100));
-	}
-	///////////////////////////////////////////////////////
-	if((map((*RC_Commands+1),(*RC_Commands+1),3400,0,100)<=(map((*RC_Commands+1),(*RC_Commands+1)+deadzone,3400,0,100)))&&(map((*RC_Commands+1),(*RC_Commands+1),347,0,-100)>=(map((*RC_Commands+1),(*RC_Commands+1)-deadzone,347,0,-100)))){
+
+	if((yPosition <= yRest+deadzone) && (yPosition >= yRest - deadzone)){
 		y_speed = 0;
 	}
-	if((map((*RC_Commands+1),(*RC_Commands+1),3400,0,100))>(map((*RC_Commands+1),(*RC_Commands+1)+deadzone,3400,0,100))){
-		y_speed = map((*RC_Commands+1),(*RC_Commands+1),3400,0,100);
+	if(yPosition > yRest+deadzone){
+		y_speed = map(yPosition,yRest + deadzone,yHigh,0,100);
 	}
-	if((map((*RC_Commands+1),(*RC_Commands+1),347,0,-100))<(map((*RC_Commands+1),(*RC_Commands+1)-deadzone,347,0,-100))){
-		y_speed = (map((*RC_Commands+1),(*RC_Commands+1),347,0,-100));
+	if(yPosition < yRest - deadzone){
+		y_speed = (map(yPosition,zLow,yRest-deadzone,-100,0));
 	}
 
-	/////////////////////////////////////////////////////////////////
-	if((map((*RC_Commands+2),(*RC_Commands+2),3155,0,100)<=(map((*RC_Commands+2),(*RC_Commands+2)+deadzone,3155,0,100)))&&(map((*RC_Commands+2),(*RC_Commands+2),840,0,-100)>=(map((*RC_Commands+2),(*RC_Commands+2)-deadzone,840,0,-100)))){
+
+
+	if((zPosition <= zRest+deadzone) && (zPosition >= zRest - deadzone)){
 		z_speed = 0;
 	}
-	if((map((*RC_Commands+2),(*RC_Commands+2),3155,0,100))>(map((*RC_Commands+2),(*RC_Commands+2)+deadzone,3155,0,100))){
-		z_speed = map((*RC_Commands+2),(*RC_Commands+2),3155,0,100);
+	if(zPosition > zRest+deadzone){
+		z_speed = map(zPosition,zRest + deadzone,zHigh,0,100);
 	}
-	if((map((*RC_Commands+2),(*RC_Commands+2),840,0,-100))<(map((*RC_Commands+2),(*RC_Commands+2)-deadzone,840,0,-100))){
-		z_speed = (map((*RC_Commands+2),(*RC_Commands+2),840,0,-100));
+	if(zPosition < zRest - deadzone){
+		z_speed = (map(zPosition,zLow,zRest - deadzone,-100,0));
 	}
-	///////////////////////////////////////////////////
-	if((map((*RC_Commands+3),(*RC_Commands+3),3117,0,100)<=(map((*RC_Commands+3),(*RC_Commands+3)+deadzone,3117,0,100)))&&(map((*RC_Commands+3),(*RC_Commands+3),467,0,-100)>=(map((*RC_Commands+3),(*RC_Commands+3)-deadzone,467,0,-100)))){
+
+
+
+	if((yawPosition <= yawRest+deadzone) && (yawPosition >= yawRest - deadzone)){
 		yaw_speed = 0;
 	}
-	if((map((*RC_Commands+3),(*RC_Commands+3),3117,0,100))>(map((*RC_Commands+3),(*RC_Commands+3)+deadzone,3117,0,100))){
-		yaw_speed = map((*RC_Commands+3),(*RC_Commands+3),3117,0,100);
+	if(yawPosition > yawRest+deadzone){
+		yaw_speed = map(yawPosition,yawRest + deadzone,yawHigh,0,100);
 	}
-	if((map((*RC_Commands+3),(*RC_Commands+3),467,0,-100))<(map((*RC_Commands+3),(*RC_Commands+3)-deadzone,467,0,-100))){
-		yaw_speed = (map((*RC_Commands+3),(*RC_Commands+3),467,0,-100));
+	if(yawPosition < yawRest - deadzone){
+
+		yaw_speed = (map(yawPosition,yawLow,yawRest - deadzone,-100,0));
 	}
 
 
