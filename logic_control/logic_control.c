@@ -5,13 +5,39 @@
  *      Author: Tomáš
  */
 #include "usart.h"
+#include "adc.h"
 #include <string.h>
 #include <stdbool.h>
-int8_t lr = 0;
-int8_t fb = 0;
-int8_t ud = 0;
-int8_t yv = 0;
+
+//USER VARIABLES
 int8_t cm = 4;
+
+uint8_t deadzone= 70;
+int8_t x_speed = 0;
+uint16_t xPosition = 0;
+uint16_t xLow = 963;
+uint16_t xHigh = 4034;
+uint16_t xRest =2905;
+
+int8_t y_speed = 0;
+uint16_t yPosition = 0;
+uint16_t yLow = 229;
+uint16_t yHigh = 3358;
+uint16_t yRest = 1778;
+
+int8_t z_speed = 0;
+uint16_t zPosition = 0;
+uint16_t zLow = 836;
+uint16_t zHigh = 3143;
+uint16_t zRest = 1930;
+
+int8_t yaw_speed = 0;
+uint16_t yawPosition = 0;
+uint16_t yawLow = 401;
+uint16_t yawHigh = 3046;
+uint16_t yawRest = 1746;
+
+
 uint32_t RC_Commands[4];
 bool not_in_air = true;
 bool rc_control_on = false;
@@ -22,15 +48,62 @@ char takeoff[] = "takeoff\r\n";
 char here[] = "here\r\n";
 char buffer[500];
 
-
-
 void get_and_send_data(void){
-	lr = map(*RC_Commands,806,4032,-100,100);
-	fb = map(*(RC_Commands+1),347,3400,-100,100);
-	ud = map(*(RC_Commands+2),3155,840,-100,100);
-	yv = map(*(RC_Commands+3),3117,467,-100,100);
 
-    if(lr<-80 && fb<-90 && ud<-90 && yv>90 && (not_in_air==true)){
+	xPosition =*RC_Commands;
+	yPosition = *(RC_Commands+1);
+	zPosition = *(RC_Commands+2);
+	yawPosition = *(RC_Commands+3);
+
+	if((xPosition <= xRest+deadzone) && (xPosition >= xRest - deadzone)){
+			x_speed = 0;
+		}
+	if(xPosition > xRest+deadzone){
+		x_speed = map(xPosition,xRest+deadzone,xHigh,0,100);
+	}
+	if(xPosition < xRest - deadzone){
+		x_speed = map(xPosition,xLow,xRest - deadzone,-100,0);
+	}
+
+
+
+	if((yPosition <= yRest+deadzone) && (yPosition >= yRest - deadzone)){
+		y_speed = 0;
+	}
+	if(yPosition > yRest+deadzone){
+		y_speed = map(yPosition,yRest + deadzone,yHigh,0,100);
+	}
+	if(yPosition < yRest - deadzone){
+		y_speed = map(yPosition,yLow,yRest-deadzone,-100,0);
+	}
+
+
+
+	if((zPosition <= zRest+deadzone) && (zPosition >= zRest - deadzone)){
+		z_speed = 0;
+	}
+	if(zPosition > zRest+deadzone){
+		z_speed = map(zPosition,zRest + deadzone,zHigh,0,-100);
+	}
+	if(zPosition < zRest - deadzone){
+		z_speed = map(zPosition,zLow,zRest - deadzone,100,0);
+	}
+
+
+
+	if((yawPosition <= yawRest+deadzone) && (yawPosition >= yawRest - deadzone)){
+		yaw_speed = 0;
+	}
+	if(yawPosition > yawRest+deadzone){
+		yaw_speed = map(yawPosition,yawRest + deadzone,yawHigh,0,-100);
+	}
+	if(yawPosition < yawRest - deadzone){
+
+		yaw_speed = map(yawPosition,yawLow,yawRest - deadzone,100,0);
+	}
+
+
+    if(x_speed<-80 && y_speed<-90 && z_speed<-90 && yaw_speed>90 && (not_in_air==true)){
 		cm = 110;
 		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&cm, 1);
 		HAL_Delay(1);
@@ -47,15 +120,15 @@ void get_and_send_data(void){
 
 
 
-	if((ud<-90) && (not_in_air==false) && watch_dog==false){
+	if((z_speed<-90) && (not_in_air==false) && watch_dog==false){
 	        start_time = HAL_GetTick();
 	        watch_dog=true;
 	}
-	else if(ud>-90){
+	else if(z_speed>-90){
 		start_time = HAL_GetTick();
 		watch_dog = false;
 	}
-	   if(ud < -90 && (not_in_air==false) && (not_down==true) && (watch_dog==true) && (HAL_GetTick()-start_time)>1000){
+	   if(z_speed < -90 && (not_in_air==false) && (not_down==true) && (watch_dog==true) && (HAL_GetTick()-start_time)>1000){
 	        rc_control_on=false;
 	        cm = 112;
 			HAL_UART_Transmit_IT(&huart2, (uint8_t *)&cm, 1);
@@ -76,13 +149,13 @@ void get_and_send_data(void){
 		cm = 111;
 		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&cm, 1);
 		HAL_Delay(1);
-		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&lr, 1);
+		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&x_speed, 1);
 		HAL_Delay(1);
-		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&fb, 1);
+		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&y_speed, 1);
 		HAL_Delay(1);
-		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&ud, 1);
+		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&z_speed, 1);
 		HAL_Delay(1);
-		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&yv, 1);
+		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&yaw_speed, 1);
 		HAL_Delay(1);
 	}
 
