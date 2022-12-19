@@ -8,6 +8,7 @@
 - [Náhlad](#Náhlad)
 - [Komunikácia](#Komunikácia)
 - [Funkcionalita](#Funkcionalita)
+- [Vrs-connector-reppo](#Vrs-connector-reppo)
 
 # Úvod
 
@@ -34,8 +35,8 @@ Kompletnú dokumentáciu príkazov nájdeme [tu](https://terra-1-g.djicdn.com/2d
 Nasledujúcou vymoženosťou je možnosť prepnúť si ovládanie dorna za pomoci tlačidla.
 Tlačidlo je buď zapnuté alebo vypnuté:
 
-1.  Zapnuté - Dron je v manuálnom riadení ovládaní zapomoci operátora
-2.  Vypnuté - Dron je v rukách umelej inteligencie, ktorá je vytrénovaná prenasledovať, tým pádom lietať, za ludskou tvárou
+*  Zapnuté - Dron je v manuálnom riadení ovládaní zapomoci operátora
+*  Vypnuté - Dron je v rukách umelej inteligencie, ktorá je vytrénovaná lietať za ludskou tvárou
 
 # Komunikácia
 
@@ -44,3 +45,10 @@ Komunikácia prebieha medzi počítačom a mikrokontrolkerom za pomoci UARTu.
 # Funkcionalita
 
 Použite funkcie
+
+# Vrs-connector-reppo
+
+Používame ešte jeden [repozitár](https://github.com/Tomas-Jurov/vrs-connector), ktorý slúži na prepojenie medzi stm32 a dronom. Je tvorený dvoma threadmi :
+
+1.  Získava a posiela spatnú vezbu do stm32 ohladom dronu. Inými slovami riadi celé STMko.
+2.  Streamuje obraz kameri na web, a zároven je v ňom implementované riadenie pomocou neurónovej siete.
