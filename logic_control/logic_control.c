@@ -8,6 +8,7 @@
 #include "adc.h"
 #include <string.h>
 #include <stdbool.h>
+#include "gpio.h"
 
 //USER VARIABLES
 int8_t cm = 4;
@@ -47,6 +48,7 @@ bool watch_dog = false;
 char takeoff[] = "takeoff\r\n";
 char here[] = "here\r\n";
 char buffer[500];
+uint8_t prev_mode = 0;
 
 void get_and_send_data(void){
 
@@ -144,19 +146,33 @@ void get_and_send_data(void){
 	        }
 	    }
 
-
-	if(rc_control_on==true){
-		cm = 111;
+	if(drone_mode!=prev_mode && drone_mode==1){
+		cm = 113;
 		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&cm, 1);
 		HAL_Delay(1);
-		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&x_speed, 1);
-		HAL_Delay(1);
-		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&y_speed, 1);
-		HAL_Delay(1);
-		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&z_speed, 1);
-		HAL_Delay(1);
-		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&yaw_speed, 1);
+
+	}
+	else if(drone_mode!=prev_mode && drone_mode ==0){
+		cm = 114;
+		HAL_UART_Transmit_IT(&huart2, (uint8_t *)&cm, 1);
 		HAL_Delay(1);
 	}
+
+	if(rc_control_on==true){
+		if(!drone_mode){
+			cm = 111;
+			HAL_UART_Transmit_IT(&huart2, (uint8_t *)&cm, 1);
+			HAL_Delay(1);
+			HAL_UART_Transmit_IT(&huart2, (uint8_t *)&x_speed, 1);
+			HAL_Delay(1);
+			HAL_UART_Transmit_IT(&huart2, (uint8_t *)&y_speed, 1);
+			HAL_Delay(1);
+			HAL_UART_Transmit_IT(&huart2, (uint8_t *)&z_speed, 1);
+			HAL_Delay(1);
+			HAL_UART_Transmit_IT(&huart2, (uint8_t *)&yaw_speed, 1);
+			HAL_Delay(1);
+		}
+	}
+	prev_mode = drone_mode;
 
 }

@@ -57,8 +57,21 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define BUTTON_Pin GPIO_PIN_6
+#define BUTTON_GPIO_Port GPIOB
+#define BUTTON_EXTI_IRQn EXTI9_5_IRQn
 
 /* USER CODE BEGIN Private defines */
+extern uint8_t drone_mode;
+#define BUTTON_GET_STATE		!HAL_GPIO_ReadPin(GPIOB,BUTTON_Pin)
+void change_mode();
+typedef enum {
+	NONE = 0,
+	RISE = 1,
+	FALL = 2
+} EDGE_TYPE;
+
+EDGE_TYPE edgeDetect(uint8_t pin_state, uint8_t samples);
 
 /* USER CODE END Private defines */
 
