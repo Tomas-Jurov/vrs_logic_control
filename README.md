@@ -4,6 +4,23 @@
 
 # Table of content
 
-- [Architecture](#)
-- [Architecture](#Architecture)
-- [Architecture](#Architecture)
+- [Úvod](#Úvod)
+- [Náhlad](#Náhlad)
+- [Komunikácia](#Komunikácia)
+- [Funkcionalita](#Funkcionalita)
+
+# Úvod
+
+Zadanie Dron
+
+# Náhlad
+
+Nekonečny loop ktorý príkazmy riadi drona
+
+# Komunikácia
+
+Komunikuje to UARTom
+
+# Funkcionalita
+
+Použite funkcie
