@@ -1,4 +1,4 @@
-# Vrs_logic_control
+# Dji Tello - Logic control
 
 ![Dron](https://i.ytimg.com/vi/nZ1o8TMZymE/maxresdefault.jpg)
 
