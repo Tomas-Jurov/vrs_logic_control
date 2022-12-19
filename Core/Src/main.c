@@ -56,7 +56,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint8_t data[10];
+uint8_t button_interrupt_flag=0;
 /* USER CODE END 0 */
 
 /**
@@ -101,6 +101,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  get_and_send_data();
+	  change_mode();
 
   }
   /* USER CODE END 3 */
@@ -152,7 +153,47 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+uint8_t prev_state=1;
+uint8_t drone_mode = 0;
+void change_mode(){
+	if(button_interrupt_flag){
+				  if(edgeDetect(BUTTON_GET_STATE, 5) == RISE) {
+						  if(prev_state){
+							  drone_mode = 1;
+							  prev_state = 0;
+						  }
+						  else{
+							  drone_mode = 0;
+							  prev_state = 1;
+						  }
+						  button_interrupt_flag=0;
+					  }
+					  HAL_Delay(10);//delay kvoli whilu
+			}
+}
 
+int counter=0;
+
+uint8_t previous_pin_state=0;
+EDGE_TYPE edgeDetect(uint8_t pin_state, uint8_t samples)
+{
+	if(pin_state != previous_pin_state){
+		counter=1;
+	}
+	else{
+		counter++;
+	}
+
+	if(counter == samples){
+		if(pin_state) return RISE;
+	}
+	previous_pin_state=pin_state;
+	return NONE;
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
+	button_interrupt_flag=1;
+}
 /* USER CODE END 4 */
 
 /**
