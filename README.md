@@ -11,7 +11,7 @@
 
 # Úvod
 
-![Urk](http://malylubo.sk/wp-content/uploads/2012/11/logo.png)
+![Urk](https://scontent.fbts10-1.fna.fbcdn.net/v/t39.30808-6/306322762_499480958850983_2907576443193663122_n.png?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=NORjCJxOTYQAX-SmdjF&_nc_ht=scontent.fbts10-1.fna&oh=00_AfA6CxFE6rTwqjAkPdStfiKP1iWnQ1qeSIIGtprEQyf9XQ&oe=63A62F8E)
 
 Tento repozitár vznikol ako semestrálne zadanie Slovenskej Technickej univerzity z predmetu VRS.
 
