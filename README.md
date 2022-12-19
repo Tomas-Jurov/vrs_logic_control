@@ -1,8 +1,8 @@
 # Vrs_logic_control
 
-![Dron](https://asset.conrad.com/media10/isa/160267/c1/-/sk/1648549_LB_00_FB/image.jpg?x=&y=)
+![Dron](https://i.ytimg.com/vi/nZ1o8TMZymE/maxresdefault.jpg)
 
-# Table of content
+# Obsah
 
 - [Úvod](#Úvod)
 - [Náhlad](#Náhlad)
