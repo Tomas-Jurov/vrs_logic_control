@@ -7,8 +7,10 @@
 - [Úvod](#Úvod)
 - [Náhlad](#Náhlad)
 - [Komunikácia](#Komunikácia)
+- [Ovládanie](#Ovládanie)
 - [Funkcionalita](#Funkcionalita)
 - [Vrs-connector-reppo](#Vrs-connector-reppo)
+- [Prvotné_nastavenie](#Prvotné_nastavenie)
 
 # Úvod
 
@@ -38,9 +40,13 @@ Tlačidlo je buď zapnuté alebo vypnuté:
 *  Zapnuté - Dron je v manuálnom riadení ovládaní zapomoci operátora
 *  Vypnuté - Dron je v rukách umelej inteligencie, ktorá je vytrénovaná lietať za ludskou tvárou
 
-# Komunikácia
+## Komunikácia
 
 Komunikácia prebieha medzi počítačom a mikrokontrolkerom za pomoci UARTu.
+
+# Ovládanie
+
+K
 
 # Funkcionalita
 
@@ -58,3 +64,13 @@ Technológie použité v tomto repozitáry:
 * PySerial          - UART komunikácia medzi počítačom a notebookom
 * UDP-protokol      - (knižnica DJITelloPy) ovládanie drona
 * Mediapipe         - neurónova sieť vytrénovaná pre nasledovanie tváre
+
+Kompletná dokumentácia na rozbehnutie tohto reppa sa nachádza [tu](https://github.com/Tomas-Jurov/vrs-connector/blob/main/requirements.txt).
+
+
+# Prvotné_nastavenie
+
+1. Naklonovanie tohto repozitáru do svojho počítača
+2. Následne uploadovať na stm32
+3. Spustenie commandu `pip install -r requirements.txt`, nainštalovanie potrebných dependencích
+4. Pustenie aplikácie - flaskApp.py
