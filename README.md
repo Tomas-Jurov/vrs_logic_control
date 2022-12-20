@@ -9,7 +9,6 @@
 - [Úvod](#Úvod)
 - [Náhľad](#Náhľad)
 - [Komunikácia](#Komunikácia)
-- [Funkcionalita](#Funkcionalita)
 - [Vrs-connector-repo](#Vrs-connector-repo)
 - [Setup](#Setup)
 - [Ovládanie](#Ovládanie)
