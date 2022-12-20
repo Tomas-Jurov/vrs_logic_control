@@ -7,10 +7,10 @@
 - [Úvod](#Úvod)
 - [Náhlad](#Náhlad)
 - [Komunikácia](#Komunikácia)
-- [Ovládanie](#Ovládanie)
 - [Funkcionalita](#Funkcionalita)
 - [Vrs-connector-reppo](#Vrs-connector-reppo)
 - [Prvotné_nastavenie](#Prvotné_nastavenie)
+- [Ovládanie](#Ovládanie)
 
 # Úvod
 
@@ -44,9 +44,6 @@ Tlačidlo je buď zapnuté alebo vypnuté:
 
 Komunikácia prebieha medzi počítačom a mikrokontrolkerom za pomoci UARTu.
 
-# Ovládanie
-
-K
 
 # Funkcionalita
 
@@ -72,5 +69,9 @@ Kompletná dokumentácia na rozbehnutie tohto reppa sa nachádza [tu](https://gi
 
 1. Naklonovanie tohto repozitáru do svojho počítača
 2. Následne uploadovať na stm32
-3. Spustenie commandu `pip install -r requirements.txt`, nainštalovanie potrebných dependencích
+3. Spustenie commandu `pip install -r requirements.txt`, (nainštaluje potrebné dependencie)
 4. Pustenie aplikácie - flaskApp.py
+
+# Ovládanie
+
+K
