@@ -7,11 +7,11 @@
 # Obsah
 
 - [Úvod](#Úvod)
-- [Náhlad](#Náhlad)
+- [Náhľad](#Náhľad)
 - [Komunikácia](#Komunikácia)
 - [Funkcionalita](#Funkcionalita)
-- [Vrs-connector-reppo](#Vrs-connector-reppo)
-- [Prvotné_nastavenie](#Prvotné_nastavenie)
+- [Vrs-connector-repo](#Vrs-connector-repo)
+- [Setup](#Setup)
 - [Ovládanie](#Ovládanie)
 
 
@@ -23,32 +23,30 @@
 
 Tento repozitár vznikol ako semestrálne zadanie Slovenskej Technickej univerzity z predmetu VRS.
 
-V nasledujúcom článku sa bližšie pozrieme na riadenie drona Dji Tello zapomoci mikrokontrolera programovaného v stm32, s niekolkými zaujímavími funkciami. 
+Cieľom semestrálneho zadania bolo ovládať drona pomocou joystickov za pomoci mikrokontroléra STM32F303K8T6 
 
 
-# Náhlad
+# Náhľad
 
-Víziou projektu je mať spustený nekonečný ciklus nahraný v mikrokontroleri, ktorý neustále posiela príkazy aklo riadiť drona.
+Mikrokontrolér STM32 slúži na získavanie natočení joysticku a na základe naprogramovanej logiky posiela connectoru (čo je v preklade bridge medzi mikrokontrolérom a dronom) príkazy na ovládanie dronu.
 
-Použité funkcie(HAL knižnica):
+Kód je napísaný za pomoci knižnice HAL a kód je kompilovaný pomocou autovygenerovaného Makefilu na základe .ioc súbora
 
-* command               - Vstupný režim SDK
-* takeoff               - Tello automatický vzlet
-* land                  - Tello utomatické pristátie
-* streamon/streamoff    - Zapnutie/Vypnutie streamovania videa
+Využivané periféria sú 2 joysticky, ľavý joystick slúži na throttle a yaw, pravý na roll, pitch
+Pridávne periférium je mechanické tlačidlo, ktoré slúži na prepínanie automatického/manuálneho módu
+
+Funkcie používané zo SDK drona DJI Tello
+* command               - Slúži na nadviazanie komunikácie s dronom
+* takeoff               - Automatické vzlietnutie
+* land                  - Atomatické pristátie
+* streamon/streamoff    - Zapnutie/Vypnutie stream-u
 
 Kompletnú dokumentáciu príkazov nájdeme [tu](https://terra-1-g.djicdn.com/2d4dce68897a46b19fc717f3576b7c6a/Tello%20编程相关/For%20Tello/Tello%20SDK%20Documentation%20EN_1.3_1122.pdf).
-
-Nasledujúcou vymoženosťou je možnosť prepnúť si ovládanie dorna za pomoci tlačidla.
-Tlačidlo je buď zapnuté alebo vypnuté:
-
-*  Zapnuté - Dron je v manuálnom riadení ovládaní zapomoci operátora
-*  Vypnuté - Dron je v rukách umelej inteligencie, ktorá je vytrénovaná lietať za ludskou tvárou
 
 
 ## Komunikácia
 
-Komunikácia prebieha medzi počítačom a mikrokontrolkerom za pomoci UARTu.
+Komunikácia prebieha za pomoci middle mana, čo je v našom prípade počítač(repo connector), pomocou UART a následne za pomoci SDK a UDP protokolu s dronom DJI Tello
 
 
 # Funkcionalita
@@ -56,38 +54,37 @@ Komunikácia prebieha medzi počítačom a mikrokontrolkerom za pomoci UARTu.
 Použite funkcie
 
 
-# Vrs-connector-reppo
+# Vrs-connector-repo
 
-Používame ešte jeden [repozitár](https://github.com/Tomas-Jurov/vrs-connector), ktorý slúži na prepojenie medzi stm32 a dronom. Je tvorený dvoma threadmi :
+Repozitár connector [repozitár](https://github.com/Tomas-Jurov/vrs-connector) slúži na komunikáciu s dronom pomocou UDP protokolu a zároveň publishuje získane video na vlastnú webovú stránku
 
-1.  Získava a posiela spatnú vezbu do stm32 ohladom dronu. Inými slovami riadi celé STMko.
-2.  Streamuje obraz kameri na web, a zároven je v ňom implementované riadenie pomocou neurónovej siete.
+1.  Pre ošetrenie nedovoleného správania sa posiela z drona spätná väzba a na základe nej logic controller vyhodnotí, či danú sadu príkazov môže požadovať
+2.  Stream publishovaný na vlastnú webovú stránku obsahuje face recognition, ktorý sa dá použiť na automatický mód drona, do ktorého sa dostaneme pomocou stlačenia mechanického tlačidla
 
 Technológie použité v tomto repozitáry:
-* Flask             - je v ňom písaný backend
-* PySerial          - UART komunikácia medzi počítačom a notebookom
-* UDP-protokol      - (knižnica DJITelloPy) ovládanie drona
-* Mediapipe         - neurónova sieť vytrénovaná pre nasledovanie tváre
+* Flask             - Backend framework
+* PySerial          - UART protocol handler
+* DJI TelloPy       - UDP protocol + safty features
+* Mediapipe         - CNN od spoločnosti google
+* OpenCV            - Spracovanie obrazu
 
-Kompletná dokumentácia na rozbehnutie tohto reppa sa nachádza [tu](https://github.com/Tomas-Jurov/vrs-connector/blob/main/requirements.txt).
 
+# Setup
 
-# Prvotné_nastavenie
-
-1. Naklonovanie tohto repozitáru do svojho počítača
-2. Následne uploadovať na stm32
-3. Spustenie commandu `pip install -r requirements.txt`, (nainštaluje potrebné dependencie)
-4. Pustenie aplikácie - flaskApp.py
+1. Stiahnutie otagovaných release verzií connectora a logic controllera
+2. Otvoriť logic controller v STM32 CubeIDE a nahratie projektu do čipu AMR Cortex M4
+3. Správne pozapájať všetky potrebné periféria obrázok sa nachádza na konci README
+4. Otvoriť connector + vytvorenie venv a následne stiahnutie všetkých potrebných dependencií pomocou `pip install -r requirements.txt`
+5. Spustenie aplikácie, main sa nachádza v súbore - flaskApp.py
 
 
 # Ovládanie
 
-Po tom ako sme si prvotne nastavili náš projekt, sa môžeme pustit do ovládania:
-
 *  Páčky k sebe(k telu) - vzlietnutie
-*  Následne treba dať páčky naspet do neutrálnej pozícií - ustálenie
-*  Následne pomocou páčiek je možné intuitívne riadenie - dron bude lietať ako mu povieme
-*  Podržanie lavého džoistika do dola(pár sekúnd) - pristátie
-*  Stlačenie tlačidla - prepnutie medzi manuálnym a automatickým riadením
+*  Následne treba vrátiť páčky do neutrálnej pozície
+*  Ľavý joystick slúži na throttle a yaw natočenie
+*  Pravý joystick roll a pitch
+*  Držanie throttlu smerom dolu po dobu 1 sekundy - pristatie
+*  Stlačenie tlačidla - prepínanie medzi manuálnym a automatickým módom
 
-![Džoistik](https://media.icdn.hu/product/GalleryMod/2021-05/701455/resp/1649584_dji_tello_dron__gamesir_t1d_kontroller_csomag.webp)
+![Joystick](https://media.icdn.hu/product/GalleryMod/2021-05/701455/resp/1649584_dji_tello_dron__gamesir_t1d_kontroller_csomag.webp)
