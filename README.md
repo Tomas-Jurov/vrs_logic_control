@@ -1,6 +1,8 @@
 # Dji Tello - Logic control
 
+
 ![Dron](https://i.ytimg.com/vi/nZ1o8TMZymE/maxresdefault.jpg)
+
 
 # Obsah
 
@@ -11,6 +13,7 @@
 - [Vrs-connector-reppo](#Vrs-connector-reppo)
 - [Prvotné_nastavenie](#Prvotné_nastavenie)
 - [Ovládanie](#Ovládanie)
+
 
 # Úvod
 
@@ -40,6 +43,7 @@ Tlačidlo je buď zapnuté alebo vypnuté:
 *  Zapnuté - Dron je v manuálnom riadení ovládaní zapomoci operátora
 *  Vypnuté - Dron je v rukách umelej inteligencie, ktorá je vytrénovaná lietať za ludskou tvárou
 
+
 ## Komunikácia
 
 Komunikácia prebieha medzi počítačom a mikrokontrolkerom za pomoci UARTu.
@@ -48,6 +52,7 @@ Komunikácia prebieha medzi počítačom a mikrokontrolkerom za pomoci UARTu.
 # Funkcionalita
 
 Použite funkcie
+
 
 # Vrs-connector-reppo
 
@@ -72,6 +77,15 @@ Kompletná dokumentácia na rozbehnutie tohto reppa sa nachádza [tu](https://gi
 3. Spustenie commandu `pip install -r requirements.txt`, (nainštaluje potrebné dependencie)
 4. Pustenie aplikácie - flaskApp.py
 
+
 # Ovládanie
 
-K
+![Džoistik](https://media.icdn.hu/product/GalleryMod/2021-05/701455/resp/1649584_dji_tello_dron__gamesir_t1d_kontroller_csomag.webp)
+
+Po tom ako sme si prvotne nastavili náš projekt, sa môžeme pustit do ovládania:
+
+*  Páčky k sebe(k telu) - vzlietnutie
+*  Následne treba dať páčky naspet do neutrálnej pozícií - ustálenie
+*  Následne pomocou páčiek je možné intuitívne riadenie - dron bude lietať ako mu povieme
+*  Podržanie lavého džoistika do dola(pár sekúnd) - pristátie
+*  Stlačenie tlačidla - prepnutie medzi manuálnym a automatickým riadením
