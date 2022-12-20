@@ -80,8 +80,6 @@ Kompletná dokumentácia na rozbehnutie tohto reppa sa nachádza [tu](https://gi
 
 # Ovládanie
 
-![Džoistik](https://media.icdn.hu/product/GalleryMod/2021-05/701455/resp/1649584_dji_tello_dron__gamesir_t1d_kontroller_csomag.webp)
-
 Po tom ako sme si prvotne nastavili náš projekt, sa môžeme pustit do ovládania:
 
 *  Páčky k sebe(k telu) - vzlietnutie
@@ -89,3 +87,5 @@ Po tom ako sme si prvotne nastavili náš projekt, sa môžeme pustit do ovláda
 *  Následne pomocou páčiek je možné intuitívne riadenie - dron bude lietať ako mu povieme
 *  Podržanie lavého džoistika do dola(pár sekúnd) - pristátie
 *  Stlačenie tlačidla - prepnutie medzi manuálnym a automatickým riadením
+
+![Džoistik](https://media.icdn.hu/product/GalleryMod/2021-05/701455/resp/1649584_dji_tello_dron__gamesir_t1d_kontroller_csomag.webp)
