@@ -16,7 +16,7 @@
 
 Tento repozitár vznikol ako semestrálne zadanie Slovenskej Technickej univerzity z predmetu VRS.
 
-V nasledujúcom článku sa bližšie pozrieme na riadenie drona Dji Tello zapomoci mikrokontrolera programovaného v STM, s niekolkými zaujímavími funkciami. 
+V nasledujúcom článku sa bližšie pozrieme na riadenie drona Dji Tello zapomoci mikrokontrolera programovaného v stm32, s niekolkými zaujímavími funkciami. 
 
 
 # Náhlad
@@ -52,3 +52,9 @@ Používame ešte jeden [repozitár](https://github.com/Tomas-Jurov/vrs-connecto
 
 1.  Získava a posiela spatnú vezbu do stm32 ohladom dronu. Inými slovami riadi celé STMko.
 2.  Streamuje obraz kameri na web, a zároven je v ňom implementované riadenie pomocou neurónovej siete.
+
+Technológie použité v tomto repozitáry:
+* Flask             - je v ňom písaný backend
+* PySerial          - UART komunikácia medzi počítačom a notebookom
+* UDP-protokol      - (knižnica DJITelloPy) ovládanie drona
+* Mediapipe         - neurónova sieť vytrénovaná pre nasledovanie tváre
