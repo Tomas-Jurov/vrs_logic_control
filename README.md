@@ -49,11 +49,6 @@ Kompletnú dokumentáciu príkazov nájdeme [tu](https://terra-1-g.djicdn.com/2d
 Komunikácia prebieha za pomoci middle mana, čo je v našom prípade počítač(repo connector), pomocou UART a následne za pomoci SDK a UDP protokolu s dronom DJI Tello
 
 
-# Funkcionalita
-
-Použite funkcie
-
-
 # Vrs-connector-repo
 
 Repozitár connector [repozitár](https://github.com/Tomas-Jurov/vrs-connector) slúži na komunikáciu s dronom pomocou UDP protokolu a zároveň publishuje získane video na vlastnú webovú stránku
